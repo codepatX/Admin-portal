@@ -4,11 +4,13 @@ import { FaSpinner } from 'react-icons/fa';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
-function Login({ onClose }) {
+function Login() {
     const [formData, setFormData] = useState({ name: '', email: '', password: '', department: 'Tech' });
     const [isLoading, setIsLoading] = useState(false);
     const [isLogin, setIsLogin] = useState(true); 
+    const navigate = useNavigate(); 
 
     const handleUnchange = (e) => {
         const { name, value } = e.target;
@@ -18,50 +20,65 @@ function Login({ onClose }) {
     const handleLogin = async () => {
         try {
             setIsLoading(true);
-            let response = await axios.post(' https://cth-interns-portal.onrender.com/api/admin/login', {
-                "email": formData.email,
-                "password": formData.password
+            const response = await axios.post('https://cth-interns-portal.onrender.com/api/admin/login', {
+                email: formData.email,
+                password: formData.password
             });
-            toast.success('Login successful');
+            toast.success('Login successful', {
+                autoClose: 500, // Toast lasts for 0.5 seconds
+                onClose: () => navigate('/dashboard')
+            });
             setIsLoading(false);
+            console.log(response.data.token);
         } catch (error) {
-            console.log(error.response.data);
+            console.log('Error:', error.response.data);
             setIsLoading(false);
-            toast.error(error.response.data.message);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message, { autoClose: 500 });
+            } else {
+                toast.error('An unexpected error occurred', { autoClose: 500 });
+            }
         }
     };
 
     const createNewUser = async () => {
         try {
             setIsLoading(true);
-            let response = await axios.post('https://cth-interns-portal.onrender.com/api/admin/signUp', {
-                "name": formData.name,
-                "email": formData.email,
-                "password": formData.password,
-                "department": formData.department
+            const response = await axios.post('https://cth-interns-portal.onrender.com/api/admin/signUp', {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                department: formData.department
             });
-            toast.success('Sign up successful');
+            toast.success('Sign up successful', {
+                autoClose: 500, // Toast lasts for 0.5 seconds
+                onClose: () => navigate('/dashboard')
+            });
             setIsLoading(false);
         } catch (error) {
-            console.log(error.response.data);
+            console.log('Error:', error.response.data);
             setIsLoading(false);
-            toast.error(error.response.data.message);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message, { autoClose: 500 });
+            } else {
+                toast.error('An unexpected error occurred', { autoClose: 500 });
+            }
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLogin) {
-            handleLogin();
+            await handleLogin();
         } else {
-            createNewUser();
+            await createNewUser();
         }
     };
 
     return (
         <div className="login-container">
             <div className="login-image">
-                {}
+                {/* Add your image source here */}
                 <img src="" alt="Login Banner" />
             </div>
             <div className="login-form-container">
