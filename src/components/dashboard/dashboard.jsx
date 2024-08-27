@@ -3,6 +3,7 @@ import './dashboard.css';
 import Projects from '../../pages/projects/projects';
 import Reports from '../../pages/reports/reports';
 import Interns from '../../pages/Interns/Interns';
+import { ToastContainer } from 'react-toastify';
 
 
 function Dashboard() {
@@ -50,6 +51,7 @@ function Dashboard() {
         <main className="main-content">
           {renderPage()}
         </main>
+        <ToastContainer/>
       </div>
     </>
   );

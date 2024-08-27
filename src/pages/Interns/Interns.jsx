@@ -1,29 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import './Interns.css';
 import { FaSpinner } from 'react-icons/fa';
+import axios from 'axios';
+import localStorage from "react-secure-storage";
+
 
 function Interns() {
   const [interns, setInterns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Fetch data from the API
-    fetch('https://cth-interns-portal.onrender.com/api/admin/interns/all')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+  const fetchInterns = async () => {
+    let token= localStorage.getItem("token")
+  try {
+    const response = await axios.get('https://cth-interns-portal.onrender.com/api/admin/interns/all',
+        {
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
         }
-        return response.json();
-      })
-      .then((data) => {
-        setInterns(data);
+    );
+    if(response.status===200){
+
+        let responseData= response.data.message
+        setInterns(responseData);
+
+     
         setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+    }
+  
+  } catch (error) {
+    setError(error);
+    setLoading(false);
+  }
+};
+
+
+  useEffect(() => {
+   
+
+    fetchInterns();
   }, []);
 
   return (
@@ -48,9 +64,9 @@ function Interns() {
               <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Department</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>School</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -59,9 +75,9 @@ function Interns() {
                 <tr key={intern.id}>
                   <td>{index + 1}</td>
                   <td>{intern.name}</td>
-                  <td>{intern.department}</td>
                   <td>{intern.email}</td>
-                  <td>{intern.phone}</td>
+                  <td>{intern.contact}</td>
+                  <td>{intern.school}</td>
                   <td><button className="action-btn">...</button></td>
                 </tr>
               ))}

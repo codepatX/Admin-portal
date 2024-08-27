@@ -5,6 +5,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import LocalStorage from "react-secure-storage";
 
 function Login() {
     const [formData, setFormData] = useState({ name: '', email: '', password: '', department: 'Tech' });
@@ -24,12 +25,20 @@ function Login() {
                 email: formData.email,
                 password: formData.password
             });
+
             toast.success('Login successful', {
                 autoClose: 500, // Toast lasts for 0.5 seconds
-                onClose: () => navigate('/dashboard')
+                onClose: () => {
+                    // Delay navigation to show toast
+                    setTimeout(() => {
+                        navigate('/dashboard');
+                        setIsLoading(false);
+                    }, 500);
+                }
             });
-            setIsLoading(false);
-            console.log(response.data.token);
+
+            let authToken = response.data.token;
+            LocalStorage.setItem("token", authToken);
         } catch (error) {
             console.log('Error:', error.response.data);
             setIsLoading(false);
@@ -50,11 +59,20 @@ function Login() {
                 password: formData.password,
                 department: formData.department
             });
+
             toast.success('Sign up successful', {
                 autoClose: 500, // Toast lasts for 0.5 seconds
-                onClose: () => navigate('/dashboard')
+                onClose: () => {
+                    // Delay navigation to show toast
+                    setTimeout(() => {
+                        navigate('/dashboard');
+                        setIsLoading(false);
+                    }, 500);
+                }
             });
-            setIsLoading(false);
+
+            let authToken = response.data.token;
+            LocalStorage.setItem("token", authToken);
         } catch (error) {
             console.log('Error:', error.response.data);
             setIsLoading(false);
@@ -78,7 +96,7 @@ function Login() {
     return (
         <div className="login-container">
             <div className="login-image">
-                {/* Add your image source here */}
+                {}
                 <img src="" alt="Login Banner" />
             </div>
             <div className="login-form-container">

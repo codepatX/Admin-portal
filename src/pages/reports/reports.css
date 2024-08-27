@@ -4,31 +4,13 @@
     font-family: 'Arial', sans-serif;
 }
 
-.reports-navbar {
-    background-color: #f8f9fa;
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
 .reports-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 0.5rem;
-}
-
-.reports-title {
-    font-size: 2rem;
-    color: #333;
-}
-
-.reports-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ddd;
+    background-color: #f8f9fa;
 }
 
 .search-input {
@@ -36,7 +18,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
-    width: 300px;
+    width: 250px;
     transition: border-color 0.3s ease;
 }
 
@@ -45,26 +27,29 @@
     outline: none;
 }
 
-.reports-content {
-    padding: 2rem;
+.reports-list {
+    padding: 1rem 2rem;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 1rem;
+    max-height: 600px; /* Adjust height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
 }
 
 .reports-list table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
 .reports-list th, .reports-list td {
-    padding: 1.2rem;
+    padding: 0.75rem;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
 }
 
 .reports-list th {
@@ -73,19 +58,46 @@
     font-weight: 600;
 }
 
-.reports-list tr:hover {
+.reports-list tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+.reports-list tr:hover {
+    background-color: #e0e0e0;
 }
 
 .action-btn {
     background: none;
     border: none;
-    font-size: 1.5rem;
-    color: #999;
+    font-size: 1.25rem;
+    color: #666;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 .action-btn:hover {
     color: #333;
+}
+
+.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    padding: 1rem;
 }

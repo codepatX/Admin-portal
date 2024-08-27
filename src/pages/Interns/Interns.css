@@ -1,62 +1,94 @@
 .interns-main-container {
     padding: 2rem;
     font-family: 'Arial', sans-serif;
-  }
-  
-  .interns-header {
+}
+
+.interns-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
-  }
-  
-  .search-input {
+}
+
+.search-input {
     padding: 0.75rem 1.25rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
-  }
-  
-  .search-input:focus {
+}
+
+.search-input:focus {
     border-color: #1aad58;
     outline: none;
-  }
-  
-  .interns-list table {
+}
+
+.interns-list {
+    max-height: 83vh; 
+    overflow-y: auto;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    background-color: white; 
+}
+
+.interns-list table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  
-  .interns-list th, .interns-list td {
+}
+
+.interns-list th, .interns-list td {
     padding: 1.2rem;
     text-align: left;
     border-bottom: 1px solid #ddd;
-  }
-  
-  .interns-list th {
+}
+
+.interns-list th {
     background-color: #f0f0f0;
     color: #555;
     font-weight: 600;
-  }
-  
-  .interns-list tr:hover {
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Ensure headers stay on top when scrolling */
+}
+
+.interns-list tr:hover {
     background-color: #f9f9f9;
-  }
-  
-  .action-btn {
+}
+
+.action-btn {
     background: none;
     border: none;
     font-size: 1.5rem;
     color: #999;
     cursor: pointer;
     transition: color 0.3s ease;
-  }
-  
-  .action-btn:hover {
+}
+
+.action-btn:hover {
     color: #333;
-  }
-  
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh; /* Match the height of the table container */
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    font-size: 2rem;
+    color: #1aad58;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    padding: 2rem;
+}
