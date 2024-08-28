@@ -48,7 +48,7 @@
     font-weight: 600;
     position: sticky;
     top: 0;
-    z-index: 1; /* Ensure headers stay on top when scrolling */
+    z-index: 1; 
 }
 
 .interns-list tr:hover {
@@ -72,13 +72,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 85vh; /* Match the height of the table container */
+    height: 85vh; 
 }
 
 .spinner {
     animation: spin 1s linear infinite;
     font-size: 2rem;
     color: #1aad58;
+}
+
+
+.interns-list img.profile-picture {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; 
+    border: 2px solid #ddd;
+}
+
+.interns-list th,
+.interns-list td {
+    text-align: center;
+    padding: 0.8rem;
+}
+
+.interns-list th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.interns-list td {
+    vertical-align: middle;
 }
 
 @keyframes spin {

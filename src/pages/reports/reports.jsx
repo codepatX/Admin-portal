@@ -3,14 +3,17 @@ import './reports.css';
 import { FaSpinner } from 'react-icons/fa';
 import axios from 'axios';
 import localStorage from "react-secure-storage";
+import DetailsModal from "../../components/detailsModal/detailsModal";
 
 function Reports() {
     const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [modalTitle, setModalTitle] = useState('');
 
     const fetchReports = async () => {
-        const token = localStorage.getItem('token'); 
+        const token = localStorage.getItem('token');
         try {
             const response = await axios.get('https://cth-interns-portal.onrender.com/api/admin/interns/reports', {
                 headers: {
@@ -19,8 +22,8 @@ function Reports() {
             });
             
             if (response.status === 200) {
-                const responseData = response.data.message; 
-                setReportData(responseData);
+                const responseData = response.data.message;
+                setReportData(responseData.sort((a, b) => new Date(b.date) - new Date(a.date)));
                 setLoading(false);
             }
         } catch (error) {
@@ -32,6 +35,15 @@ function Reports() {
     useEffect(() => {
         fetchReports();
     }, []);
+
+    const handleActionClick = (report) => {
+        setSelectedItem(report);
+        setModalTitle('Report Details');
+    };
+
+    const handleCloseModal = () => {
+        setSelectedItem(null);
+    };
 
     return (
         <div className="reports-main-container">
@@ -62,17 +74,31 @@ function Reports() {
                         <tbody>
                             {reportData.map((report, index) => (
                                 <tr key={report.id}>
-                                    <td>{report.reportName}</td>
                                     <td>{report.week}</td>
                                     <td>{report.title}</td>
-                                    <td>{report.body}</td>
-                                    <td><button className="action-btn">...</button></td>
+                                    <td>{report.body.substring(0, 50)}...</td> {}
+                                    <td>
+                                        <button 
+                                            className="action-btn" 
+                                            onClick={() => handleActionClick(report)}
+                                        >
+                                            ...
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 )}
             </section>
+
+            {selectedItem && (
+                <DetailsModal 
+                    data={selectedItem} 
+                    onClose={handleCloseModal} 
+                    title={modalTitle} 
+                />
+            )}
         </div>
     );
 }

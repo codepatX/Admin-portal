@@ -3,44 +3,46 @@ import './Interns.css';
 import { FaSpinner } from 'react-icons/fa';
 import axios from 'axios';
 import localStorage from "react-secure-storage";
-
+import DetailsModal from '../../components/detailsModal/detailsModal';
 
 function Interns() {
   const [interns, setInterns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [modalTitle, setModalTitle] = useState('');
 
   const fetchInterns = async () => {
-    let token= localStorage.getItem("token")
-  try {
-    const response = await axios.get('https://cth-interns-portal.onrender.com/api/admin/interns/all',
-        {
-            headers:{
-                'Authorization': `Bearer ${token}`
-            }
+    let token = localStorage.getItem("token");
+    try {
+      const response = await axios.get('https://cth-interns-portal.onrender.com/api/admin/interns/all', {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-    );
-    if(response.status===200){
-
-        let responseData= response.data.message
-        setInterns(responseData);
-
-     
+      });
+      if (response.status === 200) {
+        let responseData = response.data.message;
+        setInterns(responseData.sort((a, b) => new Date(b.date) - new Date(a.date)));
         setLoading(false);
+      }
+    } catch (error) {
+      setError(error);
+      setLoading(false);
     }
-  
-  } catch (error) {
-    setError(error);
-    setLoading(false);
-  }
-};
-
+  };
 
   useEffect(() => {
-   
-
     fetchInterns();
   }, []);
+
+  const handleActionClick = (intern) => {
+    setSelectedItem(intern);
+    setModalTitle('Intern Details');
+  };
+
+  const handleCloseModal = () => {
+    setSelectedItem(null);
+  };
 
   return (
     <div className="interns-main-container">
@@ -62,7 +64,7 @@ function Interns() {
           <table>
             <thead>
               <tr>
-                <th>#</th>
+                <th>Profile</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
@@ -71,20 +73,41 @@ function Interns() {
               </tr>
             </thead>
             <tbody>
-              {interns.map((intern, index) => (
+              {interns.map((intern) => (
                 <tr key={intern.id}>
-                  <td>{index + 1}</td>
+                  <td>
+                    <img 
+                      src={intern.profilePictureUrl || 'default-profile-pic-url'} 
+                      alt={intern.name} 
+                      className="profile-picture" 
+                    />
+                  </td>
                   <td>{intern.name}</td>
                   <td>{intern.email}</td>
                   <td>{intern.contact}</td>
                   <td>{intern.school}</td>
-                  <td><button className="action-btn">...</button></td>
+                  <td>
+                    <button 
+                      className="action-btn" 
+                      onClick={() => handleActionClick(intern)}
+                    >
+                      ...
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
       </section>
+
+      {selectedItem && (
+        <DetailsModal 
+          data={selectedItem} 
+          onClose={handleCloseModal} 
+          title={modalTitle} 
+        />
+      )}
     </div>
   );
 }

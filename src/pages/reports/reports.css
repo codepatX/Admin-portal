@@ -33,8 +33,8 @@
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 1rem;
-    max-height: 600px; /* Adjust height as needed */
-    overflow-y: auto; /* Enables vertical scrolling */
+    max-height: 600px; 
+    overflow-y: auto; 
 }
 
 .reports-list table {
@@ -43,6 +43,7 @@
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
+
 }
 
 .reports-list th, .reports-list td {
@@ -50,12 +51,15 @@
     text-align: left;
     border-bottom: 1px solid #ddd;
     font-size: 0.9rem;
+
 }
 
 .reports-list th {
     background-color: #f0f0f0;
     color: #555;
     font-weight: 600;
+    margin-left: 3rem  ;
+
 }
 
 .reports-list tr:nth-child(even) {
