@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Interns.css';
-import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner, FaUserCircle } from 'react-icons/fa';
 import axios from 'axios';
 import localStorage from "react-secure-storage";
-import DetailsModal from '../../components/detailsModal/detailsModal';
+import InternsModal from './internsmodal';
 
 function Interns() {
   const [interns, setInterns] = useState([]);
@@ -24,6 +24,7 @@ function Interns() {
         let responseData = response.data.message;
         setInterns(responseData.sort((a, b) => new Date(b.date) - new Date(a.date)));
         setLoading(false);
+        console.log(response.data)
       }
     } catch (error) {
       setError(error);
@@ -36,8 +37,24 @@ function Interns() {
   }, []);
 
   const handleActionClick = (intern) => {
-    setSelectedItem(intern);
+    const { _id, password, __v, ...filteredData } = intern;
+    Object.keys(filteredData).forEach(key => {
+      const dateValue = new Date(filteredData[key]);
+    
+      // Check if the value is a valid date
+      if (!isNaN(dateValue.getTime())) {
+        // Format the date
+        filteredData[key] = dateValue.toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'long',
+         
+        });
+      }
+    });
+
+    setSelectedItem(filteredData);
     setModalTitle('Intern Details');
+
   };
 
   const handleCloseModal = () => {
@@ -76,11 +93,15 @@ function Interns() {
               {interns.map((intern) => (
                 <tr key={intern.id}>
                   <td>
-                    <img 
-                      src={intern.profilePictureUrl || 'default-profile-pic-url'} 
-                      alt={intern.name} 
-                      className="profile-picture" 
-                    />
+                    {intern.profileUrl ? (
+                      <img 
+                        src={intern.profileUrl} 
+                        alt={intern.name} 
+                        className="profile-picture" 
+                      />
+                    ) : (
+                      <FaUserCircle className="default-avatar" />
+                    )}
                   </td>
                   <td>{intern.name}</td>
                   <td>{intern.email}</td>
@@ -102,7 +123,7 @@ function Interns() {
       </section>
 
       {selectedItem && (
-        <DetailsModal 
+        <InternsModal 
           data={selectedItem} 
           onClose={handleCloseModal} 
           title={modalTitle} 

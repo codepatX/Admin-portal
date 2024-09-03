@@ -3,8 +3,8 @@
   flex-direction: column;
   font-family: 'Arial', sans-serif;
   width: 100%;
-  height: 110vh; 
-  overflow: hidden; 
+  height: 100vh; /* Adjusted for viewport height */
+  overflow: hidden; /* Prevent horizontal and vertical scrolling */
 }
 
 .profile-header {
@@ -13,9 +13,10 @@
   align-items: center;
   padding: 0.5rem 1.1rem;
   background-color: #ffffff;
-  position: sticky; 
+  position: sticky;
   top: 0;
-  z-index: 100; 
+  z-index: 100;
+  box-sizing: border-box;
 }
 
 .profile-container {
@@ -25,8 +26,8 @@
 }
 
 .profile-picture {
-  width: 25px;
-  height: 25px;
+  width: 30px; /* Increased size for better visibility */
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #2d3192;
@@ -39,32 +40,31 @@
 }
 
 .profile-name {
-  font-size: 12px;
+  font-size: 14px; /* Slightly larger for better readability */
   color: #333;
   margin: 0;
 }
 
 .profile-role {
-  font-size: 11px;
+  font-size: 12px; /* Slightly larger for consistency */
   color: #666;
   margin: 0;
 }
 
 .projects-title {
-  font-size: 1rem;
+  font-size: 1.25rem; /* Slightly larger title for emphasis */
   color: #333;
 }
 
 .projects-content {
   padding: 2rem;
   background-color: #ffffff;
-  border-radius: 3px;
+  border-radius: 8px; /* Rounded corners for a modern look */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  margin-top: 1rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
+  margin: 1rem;
   overflow-y: auto;
-  max-height: calc(110vh - 110px); 
+  max-height: calc(100vh - 80px); /* Adjusted for header and footer height */
+  box-sizing: border-box;
 }
 
 .projects-header {
@@ -79,17 +79,17 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 2rem;
 }
 
 .search-input {
   padding: 7px 11px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  height: 100%;
+  height: 40px; /* Increased height for better usability */
   font-size: 1rem;
   width: 300px;
   transition: border-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .search-input:focus {
@@ -97,18 +97,26 @@
   outline: none;
 }
 
+.projects-list {
+  width: 100%;
+  overflow-x: auto; /* Allows horizontal scrolling within the container */
+}
+
 .projects-list table {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
   border-radius: 4px;
-  overflow: hidden;
+  table-layout: fixed; /* Ensures table layout does not overflow */
 }
 
 .projects-list th, .projects-list td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  overflow: hidden; /* Prevents content overflow */
+  text-overflow: ellipsis; /* Adds ellipsis for overflowing text */
+  white-space: nowrap; /* Prevents text wrapping */
 }
 
 .projects-list th {
@@ -128,6 +136,7 @@
   color: #999;
   cursor: pointer;
   transition: color 0.3s ease;
+  margin-left: 1rem;
 }
 
 .action-btn:hover {
@@ -157,4 +166,18 @@
 
 .page-btn:hover {
   background-color: #1aad58;
+}
+
+@media (max-width: 768px) {
+  .search-input {
+    width: 100%;
+  }
+
+  .projects-list table {
+    font-size: 0.9rem; 
+  }
+
+  .projects-title {
+    font-size: 1.1rem; 
+  }
 }

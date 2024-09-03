@@ -20,7 +20,7 @@ function Reports() {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-            
+
             if (response.status === 200) {
                 const responseData = response.data.message;
                 setReportData(responseData.sort((a, b) => new Date(b.date) - new Date(a.date)));
@@ -37,7 +37,28 @@ function Reports() {
     }, []);
 
     const handleActionClick = (report) => {
-        setSelectedItem(report);
+        // Format dates and filter out unwanted fields
+        const { _id, internId, __v, ...filteredData } = report;
+
+        // Format the date
+        Object.keys(filteredData).forEach(key => {
+            const dateValue = new Date(filteredData[key]);
+          
+            // Check if the value is a valid date
+            if (!isNaN(dateValue.getTime())) {
+              // Format the date
+              filteredData[key] = dateValue.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              });
+            }
+          });
+          
+
+        setSelectedItem(filteredData);
         setModalTitle('Report Details');
     };
 
@@ -76,7 +97,7 @@ function Reports() {
                                 <tr key={report.id}>
                                     <td>{report.week}</td>
                                     <td>{report.title}</td>
-                                    <td>{report.body.substring(0, 50)}...</td> {}
+                                    <td>{report.body.substring(0, 50)}...</td>
                                     <td>
                                         <button 
                                             className="action-btn" 

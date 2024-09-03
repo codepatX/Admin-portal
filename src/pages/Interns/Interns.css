@@ -116,3 +116,55 @@
     text-align: center;
     padding: 2rem;
 }
+
+
+.interns-list img.profile-picture {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; 
+    border: 2px solid #ddd;
+    background-color: #f0f0f0; /* Light background color for default avatar */
+}
+
+/* Optional: Style for the default avatar if it has a different appearance */
+.interns-list img.profile-picture.default-avatar {
+    background-color: #ddd; /* Or any color you prefer */
+}
+
+
+.interns-list img.profile-picture {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; 
+    border: 2px solid #ddd;
+}
+
+.default-avatar {
+    font-size: 2rem; 
+    color: #aaa; /* Light color for the default avatar icon */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* Light background color for default avatar */
+    border: 2px solid #ddd; /* Border to match the profile pictures */
+}
+
+.interns-list th, .interns-list td {
+    text-align: center;
+    padding: 0.8rem;
+}
+
+.interns-list th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.interns-list td {
+    vertical-align: middle;
+}
+

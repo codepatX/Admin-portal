@@ -27,9 +27,8 @@ function Login() {
             });
 
             toast.success('Login successful', {
-                autoClose: 500, // Toast lasts for 0.5 seconds
+                autoClose: 500,
                 onClose: () => {
-                    // Delay navigation to show toast
                     setTimeout(() => {
                         navigate('/dashboard');
                         setIsLoading(false);
@@ -39,11 +38,18 @@ function Login() {
 
             let authToken = response.data.token;
             LocalStorage.setItem("token", authToken);
+            let username = response.data.name; 
+            LocalStorage.setItem("token", authToken);
+            LocalStorage.setItem("username", username); 
+            console.log(response.data)
+
         } catch (error) {
             console.log('Error:', error.response.data);
             setIsLoading(false);
             if (error.response && error.response.data && error.response.data.message) {
                 toast.error(error.response.data.message, { autoClose: 500 });
+                console.log(response.data)
+
             } else {
                 toast.error('An unexpected error occurred', { autoClose: 500 });
             }
@@ -71,13 +77,18 @@ function Login() {
                 }
             });
 
+            LocalStorage.setItem("department", formData.department);
+
+
             let authToken = response.data.token;
             LocalStorage.setItem("token", authToken);
+            LocalStorage.setItem("username", username);
         } catch (error) {
             console.log('Error:', error.response.data);
             setIsLoading(false);
             if (error.response && error.response.data && error.response.data.message) {
                 toast.error(error.response.data.message, { autoClose: 500 });
+
             } else {
                 toast.error('An unexpected error occurred', { autoClose: 500 });
             }

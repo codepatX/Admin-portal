@@ -12,6 +12,9 @@ function Projects() {
     const [selectedItem, setSelectedItem] = useState(null);
     const [modalTitle, setModalTitle] = useState('');
     const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username'); 
+    const department = localStorage.getItem('department')
+
 
     const fetchProjects = async () => {
         try {
@@ -24,19 +27,36 @@ function Projects() {
             if (response.status === 200) {
                 setProjects(response.data.sort((a, b) => new Date(b.date) - new Date(a.date)));
                 setLoading(false);
+                console.log(response.data)
+
             }
         } catch (error) {
             setError(error);
             setLoading(false);
         }
-    };
 
+    };
     useEffect(() => {
         fetchProjects();
     }, []);
 
     const handleActionClick = (project) => {
-        setSelectedItem(project);
+        const { _id, internId, __v, ...filteredData } = project;
+
+        Object.keys(filteredData).forEach(key => {
+            const dateValue = new Date(filteredData[key]);
+          
+            if (!isNaN(dateValue.getTime())) {
+              filteredData[key] = dateValue.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+               
+              });
+            }
+          });
+          
+
+        setSelectedItem(filteredData);
         setModalTitle('Project Details');
     };
 
@@ -51,8 +71,8 @@ function Projects() {
                 <div className="profile-container">
                     <img src="profile-picture-url" alt="Profile" className="profile-picture" />
                     <div className="profile-info">
-                        <h2 className="profile-name">John Doe</h2>
-                        <p className="profile-role">Project Manager</p>
+                        <h2 className="profile-name">{username}</h2>
+                        <p className="profile-role">{department}</p>
                     </div>
                 </div>
             </header>
@@ -86,7 +106,7 @@ function Projects() {
                                 </thead>
                                 <tbody>
                                     {projects.map((project, index) => (
-                                        <tr key={project.id}>
+                                        <tr key={project._id}>
                                             <td>{index + 1}</td>
                                             <td>{project.title}</td>
                                             <td>{project.description}</td>

@@ -1,0 +1,143 @@
+.interns-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker background for better focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .interns-modal-container {
+    background-color: #ffffff;
+    border-radius: 12px; /* Slightly larger border-radius for a smoother appearance */
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Softer shadow for a floating effect */
+    position: relative;
+    animation: fadeIn 0.3s ease-out; /* Smooth fade-in effect */
+
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333; /* Darker color for better visibility */
+    transition: color 0.2s ease-in-out; /* Smooth transition effect on hover */
+    
+  }
+  
+  .close-button:hover {
+    color: #ff5c5c; /* Subtle hover effect with a light red color */
+  }
+  
+  .modal-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #444; /* Slightly darker shade for better contrast */
+    
+  }
+  
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    
+  }
+  
+  .profile-picture-modal {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Add shadow for a lifted appearance */
+    
+  }
+  
+  .default-avatar-modal {
+    font-size: 110px;
+    color: #ccc; /* Softer color for the default avatar */
+    
+  }
+  
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 30rem;
+    height: 19rem;
+    padding-left: 5rem;
+    margin-bottom: 10px;
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: space-around;align-items: center;
+
+  }
+  
+  .details-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .label {
+    font-weight: 600;
+    color: #666; /* Medium gray color for the labels */
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  .value {
+    color: #333; /* Darker color for better readability */
+    font-size: 16px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .details-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .label {
+    font-weight: 600;
+    color: #666; /* Label color */
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  .value {
+    color: #333; /* Value color */
+    font-size: 16px;
+  }
+  
